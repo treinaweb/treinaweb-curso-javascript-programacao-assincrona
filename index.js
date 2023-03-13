@@ -1,18 +1,36 @@
-const myPromise = Promise.resolve(77);
-
-const newPromise = new Promise((resolve) => {
-    setTimeout(() => {
-        resolve(500);
-    }, 1000)
-});
-
-Promise.all([myPromise, newPromise])
-    .then((promises) => {
-        console.log(promises);
+function getData() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const data = {
+                nome: "ariel",
+                idade: 29
+            }
+            // resolve(data);
+            reject("erro inesperado");
+        }, 1000);
     });
+}
 
-// Promise.race([myPromise, newPromise])
-//     .then((data) => {
-//         console.log(data);
-//     });
+function processData(data) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            data.idade *= 2;
+            resolve(data);
+        }, 1000);
+    });
+}
+
+async function displayData() {
+    try {
+        const data = await getData();
+        const processedData = await processData(data);
+
+        console.log(processedData);
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+displayData();
 
