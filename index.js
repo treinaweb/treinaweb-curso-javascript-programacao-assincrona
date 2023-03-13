@@ -1,17 +1,18 @@
-const BASE_URL = "http://localhost:3002";
+const myPromise = Promise.resolve(77);
 
-function getUser() {
-    return new Promise((resolve, reject) => {
-        fetch(`${BASE_URL}/api/user`, {
-            method: "GET"
-        }).then((response) => {
-            resolve(response.json());
-        }).catch(() => {
-            reject("erro inesperado");
-        });
-    })
-}
+const newPromise = new Promise((resolve) => {
+    setTimeout(() => {
+        resolve(500);
+    }, 1000)
+});
 
-getUser().then((data) => {
-    console.log(data);
-})
+Promise.all([myPromise, newPromise])
+    .then((promises) => {
+        console.log(promises);
+    });
+
+// Promise.race([myPromise, newPromise])
+//     .then((data) => {
+//         console.log(data);
+//     });
+
