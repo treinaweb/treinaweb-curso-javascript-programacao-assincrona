@@ -1,36 +1,24 @@
-function getData() {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            const data = {
-                nome: "ariel",
-                idade: 29
-            }
-            // resolve(data);
-            reject("erro inesperado");
-        }, 1000);
-    });
+async function getUser(userId) {
+    return await fetch(`http://localhost:3002/api/user?id=${userId}`);
 }
 
-function processData(data) {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            data.idade *= 2;
-            resolve(data);
-        }, 1000);
-    });
+async function getProfile(profileId) {
+    return await fetch(`http://localhost:3002/api/profile?id=${profileId}`);
 }
 
-async function displayData() {
-    try {
-        const data = await getData();
-        const processedData = await processData(data);
 
-        console.log(processedData);
-    } catch (error) {
-        console.log(error);
-    }
+async function main() {
+    const responseUser = await getUser("xkSTVIdTsrgmCBeo");
 
+    const user = await responseUser.json();
+
+    console.log(user);
+
+    const responseProfile = await getProfile(user.profileId);
+
+    const profile = await responseProfile.json();
+
+    console.log(profile);
 }
 
-displayData();
-
+main();
