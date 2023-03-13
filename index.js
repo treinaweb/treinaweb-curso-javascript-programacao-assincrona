@@ -1,16 +1,22 @@
-const fs = require("fs");
+new Promise((resolve, reject) => {
+
+    setTimeout(() => {
+
+        resolve("promise resolvida");
+        // if (Math.random() < 0.5) {
+        // } else {
+        //     reject("erro ao executar a promise");
+        // }
 
 
-function lerArquivo(caminho, callback) {
-    fs.readFileSync(caminho, (erro, data) => {
-        if (erro) {
-            console.log(`Erro ao ler o arquivo: ${erro}`);
-        } else {
-            callback(data.toString());
-        }
-    });
-}
+    }, 1000);
 
-lerArquivo("./arquivo.txt", (data) => {
+}).then((data) => {
     console.log(data);
-});
+
+    return new Promise((resolve) => resolve("nova promise resolvida"));
+}).then((data) => {
+    console.log(data);
+}).catch((erro) => {
+    console.log(erro);
+})
