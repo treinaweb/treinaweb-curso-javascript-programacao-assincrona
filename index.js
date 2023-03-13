@@ -1,17 +1,43 @@
-function main() {
-    console.log("main");
+function getData(callback) {
+    setTimeout(() => {
+        const data = {
+            nome: "ariel",
+            idade: 29,
+        }
+        callback(data);
+    }, 1000)
 }
 
 
-setTimeout(() => {
-    console.log("setTimeout");
-}, 0);
+function processData(data, callback) {
 
 
-new Promise((resolve) => {
-    resolve();
-}).then(() => {
-    console.log("Promise");
-})
+    callback(data);
 
-main();
+}
+
+
+function displayData(data) {
+    console.log(data);
+}
+
+getData((data) => {
+    processData(data, (processesData) => {
+        displayData(processesData);
+    })
+});
+
+
+
+// CALLBACK HELL
+
+
+getUser(function (user) {
+    getProfile(user.id, function (profile) {
+        getFriends(user.id, function (friends) {
+            getMessages(user.id, function (messages) {
+                // Faz algo com user, profile, friends e messages
+            });
+        });
+    });
+});
