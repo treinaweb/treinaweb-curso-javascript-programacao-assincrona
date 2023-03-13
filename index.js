@@ -1,22 +1,17 @@
-new Promise((resolve, reject) => {
+const BASE_URL = "http://localhost:3002";
 
-    setTimeout(() => {
+function getUser() {
+    return new Promise((resolve, reject) => {
+        fetch(`${BASE_URL}/api/user`, {
+            method: "GET"
+        }).then((response) => {
+            resolve(response.json());
+        }).catch(() => {
+            reject("erro inesperado");
+        });
+    })
+}
 
-        resolve("promise resolvida");
-        // if (Math.random() < 0.5) {
-        // } else {
-        //     reject("erro ao executar a promise");
-        // }
-
-
-    }, 1000);
-
-}).then((data) => {
+getUser().then((data) => {
     console.log(data);
-
-    return new Promise((resolve) => resolve("nova promise resolvida"));
-}).then((data) => {
-    console.log(data);
-}).catch((erro) => {
-    console.log(erro);
 })
